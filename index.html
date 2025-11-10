@@ -30,6 +30,15 @@
         .whatsapp-button:hover {
             background-color: #128C7E;
         }
+        /* Estilo para links no footer para parecerem clicáveis */
+        .footer-link {
+            text-decoration: underline;
+            color: #1e3a8a; /* Cor primária para destacar o link */
+            font-weight: 600;
+        }
+        .footer-link:hover {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
@@ -37,7 +46,7 @@
     <!-- Container Principal do Formulário -->
     <div class="w-full max-w-lg bg-white shadow-2xl rounded-xl overflow-hidden transform transition-all duration-300 hover:shadow-3xl">
 
-        <!-- Header da Página de Captura: Logo Redondo e Título Centralizado (ALTERADO) -->
+        <!-- Header da Página de Captura: Logo Redondo e Título Centralizado -->
         <header class="bg-primary text-white p-6 md:p-8">
             
             <!-- LOGO DA EMPRESA (AGV) - REDONDO E CENTRALIZADO -->
@@ -73,7 +82,7 @@
 
                 <!-- Campo Placa do Carro -->
                 <div>
-                    <label for="placa" class="block text-sm font-medium text-gray-700 mb-2">Placa do Carro (Mercosul ou Antiga)</label>
+                    <label for="placa" class="block text-sm font-medium text-gray-700 mb-2">Placa do Carro</label>
                     <input type="text" id="placa" name="placa" required 
                            placeholder="Ex: ABC1234 ou ABC1D23"
                            title="Insira a placa do veículo (apenas letras e números)."
@@ -100,9 +109,9 @@
                            aria-required="true">
                 </div>
 
-                <!-- Campo Ano do Carro (NOVO) -->
+                <!-- Campo Ano do Carro (ALTERADO) -->
                 <div>
-                    <label for="ano" class="block text-sm font-medium text-gray-700 mb-2">Ano do Carro (Modelo)</label>
+                    <label for="ano" class="block text-sm font-medium text-gray-700 mb-2">Ano do Carro</label>
                     <input type="number" id="ano" name="ano" required 
                            placeholder="Ex: 2018"
                            min="1900" max="2099"
@@ -163,14 +172,15 @@
             
         </main>
 
-        <!-- Footer da Página: Com Informações de Endereço -->
+        <!-- Footer da Página: Com Informações de Endereço (LINK CORRIGIDO) -->
         <footer class="bg-gray-100 p-4 text-center text-xs text-gray-500 border-t border-gray-200">
             <p class="mb-2 font-semibold text-gray-700">AGV Proteção Veicular - Unidade Central</p>
-            <!-- ENDEREÇO DA EMPRESA -->
-            <!-- SUBSTITUA ESTE ENDEREÇO PELO ENDEREÇO REAL DA UNIDADE -->
+            <!-- ENDEREÇO DA EMPRESA - AGORA CLICÁVEL COM LINK MAIS ESTÁVEL -->
             <address class="not-italic mb-2">
-                Rua Vicente Guida, 126 - Vila Vampre<br>
-                Poá/SP - CEP 08556-170
+                <a href="https://www.google.com/maps/search/?api=1&query=Rua+Vicente+Guida,+126,+Vila+Vampre,+Poá,+SP" target="_blank" class="footer-link block">
+                    Rua Vicente Guida, 126 - Vila Vampre<br>
+                    Poá/SP - CEP 08556-170
+                </a>
             </address>
             <p>
                 Ao enviar, você concorda que nossa equipe de vendas entre em contato para apresentar os planos de proteção.
@@ -263,7 +273,7 @@
                     // Não faz nada com a resposta, apenas garante que a requisição foi feita.
                 })
                 .catch(error => {
-                    // console.error('Erro ao enviar dados para o Make/Pluga:', error);
+                    // console.error('Erro ao enviar dados para o Make/PLuga:', error);
                     // Ignora o erro, pois o mais importante é o WhatsApp.
                 })
                 .finally(() => {
