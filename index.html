@@ -248,7 +248,16 @@
                 dígitoFinal: placaFinal,
                 // Adiciona a referência do corretor para o Make
                 corretor: 'Welton', 
-                data_hora_envio: new Date().toISOString()
+                data_hora_envio: new Date().toLocaleString('pt-BR', { 
+                    timeZone: 'America/Sao_Paulo', 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit',
+                    hour12: false
+                })
             };
 
             // 2. ENVIAR PARA O MAKE/PLUGA (Webhook)
