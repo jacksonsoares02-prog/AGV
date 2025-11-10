@@ -234,14 +234,18 @@
             const submitButton = document.getElementById('submitButton');
             
             // 1. Coleta dos dados
+            const placa = form.placa.value.toUpperCase().trim();
+            const placaFinal = placa.charAt(placa.length - 1);
+            
             const formData = {
                 nome: form.nome.value.trim(),
-                placa: form.placa.value.toUpperCase().trim(),
+                placa: placa,
                 marca: form.marca.value.trim(),
                 modelo: form.modelo.value.trim(),
                 ano: form.ano.value.trim(),
                 email: form.email.value.trim(),
                 telefone: form.telefone.value.trim(),
+                dígitoFinal: placaFinal,
                 // Adiciona a referência do corretor para o Make
                 corretor: 'Welton', 
                 data_hora_envio: new Date().toISOString()
