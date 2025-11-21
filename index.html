@@ -101,9 +101,9 @@
             <!-- Título da Empresa -->
             <h1 class="text-2xl sm:text-3xl font-bold">AGV - Proteção Veicular</h1>
             
-            <!-- NOVO SUBTÍTULO -->
+            <!-- SUBTÍTULO -->
             <p class="text-lg sm:text-xl text-blue-200 mt-1">Garanta Sua Tranquilidade</p>
-            <!-- FIM DO NOVO SUBTÍTULO -->
+            <!-- FIM DO SUBTÍTULO -->
             
         </header>
 
@@ -206,7 +206,7 @@
            class="flex items-start space-x-3 text-white hover:text-blue-300 address-link">
             <!-- Ícone de Localização (Agora Branco) -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white mt-0.5 flex-shrink-0">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
             </svg>
             <p class="text-sm">
@@ -227,7 +227,7 @@
         
         // Dados fixos do corretor e endereço (confirmados)
         const CORRETOR_NOME = 'Jackson Soares';
-        // Endereço fixo do corretor, usado também na mensagem do WhatsApp
+        // Endereço fixo do corretor. REMOVIDO DA MENSAGEM DO WHATSAPP, mas mantido na constante caso seja necessário para outras partes do código.
         const CORRETOR_ENDERECO = 'Rua Monte Camberela, 184 - CEP: 08452-340 - São Paulo/SP'; 
         
         // NOVO NÚMERO DE ATENDIMENTO: 11981087312, formatado com código do país 55 e DDD 11.
@@ -364,6 +364,7 @@
             // 2. Criar e redirecionar para o link do WhatsApp (síncrono)
             
             // Mensagem formatada para o WhatsApp (usando \n para quebra de linha)
+            // REMOÇÃO DA LINHA DO ENDEREÇO
             const whatsappMessage = encodeURIComponent(
                 `Olá! Meu nome é ${nome} e gostaria de iniciar a cotação da proteção veicular.\n\n` +
                 `Detalhes do veículo:\n` +
@@ -373,8 +374,7 @@
                 `Ano: ${ano}\n\n` +
                 `Meu telefone/WhatsApp:\n${phoneFormatted}\n` + 
                 `E-mail:\n${email}\n\n` + 
-                `Corretor de Referência: ${corretor}\n` + 
-                `Endereço de Referência:\n${CORRETOR_ENDERECO}` 
+                `Corretor de Referência: ${corretor}` // A linha do endereço foi removida daqui.
             );
 
             // Redireciona para o WhatsApp
