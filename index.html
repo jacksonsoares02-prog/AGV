@@ -364,9 +364,8 @@
             // 2. Criar e redirecionar para o link do WhatsApp (síncrono)
             
             // Mensagem formatada para o WhatsApp (usando \n para quebra de linha)
-            // REMOÇÃO DA LINHA DO ENDEREÇO
             const whatsappMessage = encodeURIComponent(
-                `Olá! Meu nome é ${nome} e gostaria de iniciar uma cotação de proteção pra o meu veículo.\n\n` +
+                `Olá! Meu nome é ${nome}, e gostaria de iniciar a cotação de proteção para meu veicular.\n\n` +
                 `Detalhes do veículo:\n` +
                 `Placa: ${placa} (Dígito Final: ${placaFinal})\n` +
                 `Marca: ${marca || 'Não informado'}\n` +
@@ -374,7 +373,7 @@
                 `Ano: ${ano}\n\n` +
                 `Meu telefone/WhatsApp:\n${phoneFormatted}\n` + 
                 `E-mail:\n${email}\n\n` + 
-                `Corretor de Referência: ${corretor}` // A linha do endereço foi removida daqui.
+                `Corretor de Referência:\n${corretor}` // Quebra de linha adicionada aqui
             );
 
             // Redireciona para o WhatsApp
