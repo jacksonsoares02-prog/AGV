@@ -3,355 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGV Proteção Veicular - Garanta Sua Tranquilidade</title>
-    <!-- Carregamento do Tailwind CSS -->
+    <title>AGV Proteção Veicular - Cotação Rápida</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Configurações personalizadas do Tailwind e fonte */
-        :root {
-            --color-primary: #1e3a8a; /* Dark Blue */
-            --color-secondary: #fcd34d; /* Amber */
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .form-card { max-width: 500px; }
+        .input-group { position: relative; }
+        .input-group input:focus ~ .label,
+        .input-group input:not(:placeholder-shown) ~ .label {
+            top: -10px;
+            font-size: 0.75rem;
+            color: #1e40af; /* Tailwind blue-700 */
         }
-        .bg-primary { background-color: var(--color-primary); }
-        .text-primary { color: var(--color-primary); }
-        .bg-secondary { background-color: var(--color-secondary); }
-        .hover\:bg-secondary\:hover { background-color: #fcd34d; }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
+        .input-group .label {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            background-color: white;
+            padding: 0 4px;
+            color: #6b7280; /* Tailwind gray-500 */
         }
+        /* Estilos específicos para o botão de WhatsApp */
         .whatsapp-button {
-            background-color: #25D366; /* WhatsApp Green */
-            color: white;
-            transition: background-color 0.2s;
+            transition: background-color 0.3s ease, transform 0.1s ease;
         }
         .whatsapp-button:hover {
-            background-color: #128C7E;
+            background-color: #128c7e; /* Cor um pouco mais escura */
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-        /* Estilo para links no footer para parecerem clicáveis */
-        .footer-link {
-            text-decoration: underline;
-            color: #1e3a8a; /* Cor primária para destacar o link */
-            font-weight: 600;
+        /* Garante que o input de telefone só aceite dígitos e limite o tamanho */
+        #telefone {
+            appearance: none;
+            -moz-appearance: textfield;
         }
-        .footer-link:hover {
-            opacity: 0.8;
+        #telefone::-webkit-inner-spin-button, 
+        #telefone::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="p-4 sm:p-8 flex items-center justify-center min-h-screen">
 
-    <!-- Container Principal do Formulário -->
-    <div class="w-full max-w-lg bg-white shadow-2xl rounded-xl overflow-hidden transform transition-all duration-300 hover:shadow-3xl">
+    <div class="form-card bg-white p-6 sm:p-8 rounded-xl shadow-2xl w-full">
+        <div class="flex items-center space-x-3 mb-6 border-b pb-4">
+            <!-- Icone de Escudo/Proteção usando SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-blue-600">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Cotação Rápida AGV</h1>
+        </div>
+        
+        <p class="text-gray-600 mb-6">Preencha os dados abaixo e inicie sua cotação diretamente pelo WhatsApp.</p>
 
-        <!-- Header da Página de Captura: Logo Redondo e Título Centralizado -->
-        <header class="bg-primary text-white p-6 md:p-8">
+        <form id="cotacaoForm" class="space-y-6">
             
-            <!-- LOGO DA EMPRESA (AGV) - REDONDO E CENTRALIZADO -->
-            <!-- SUBSTITUA ESTA URL PELA URL REAL (QUADRADA) DA LOGO DA AGV -->
-            <img src="https://placehold.co/80x80/fcd34d/1e3a8a?text=AGV" 
-                 alt="Logo da AGV Proteção Veicular" 
-                 class="h-20 w-20 rounded-full mx-auto mb-4 shadow-lg border-2 border-white/50"
-                 onerror="this.onerror=null; this.src='https://placehold.co/80x80/fcd34d/1e3a8a?text=AGV';">
-            
-            <!-- TÍTULO CENTRALIZADO E MAIOR -->
-            <h1 class="text-2xl md:text-3xl font-bold text-center">
-                Proteção Veicular
-            </h1>
-            
-            <!-- Subtítulo de CTA centralizado -->
-            <p class="text-sm md:text-lg font-semibold text-center opacity-100 mt-2">
-                Cotação Rápida e Confiável
-            </p>
-        </header>
-
-        <!-- Corpo do Formulário -->
-        <main class="p-6 md:p-8">
-            <form id="leadForm" class="space-y-6">
-
-                <!-- Campo Nome Completo -->
-                <div>
-                    <label for="nome" class="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
-                    <input type="text" id="nome" name="nome" required 
-                           placeholder="Seu nome"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 ease-in-out placeholder-gray-400 shadow-sm"
-                           aria-required="true">
-                </div>
-
-                <!-- Campo Placa do Carro -->
-                <div>
-                    <label for="placa" class="block text-sm font-medium text-gray-700 mb-2">Placa do Carro</label>
-                    <input type="text" id="placa" name="placa" required 
-                           placeholder="Ex: ABC1234 ou ABC1D23"
-                           title="Insira a placa do veículo (apenas letras e números)."
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 ease-in-out placeholder-gray-400 shadow-sm uppercase"
-                           oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');"
-                           aria-required="true">
-                </div>
-
-                <!-- Campo Marca do Carro (NOVO) -->
-                <div>
-                    <label for="marca" class="block text-sm font-medium text-gray-700 mb-2">Marca do Carro</label>
-                    <input type="text" id="marca" name="marca" required 
-                           placeholder="Ex: Fiat, Chevrolet, Honda"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 ease-in-out placeholder-gray-400 shadow-sm"
-                           aria-required="true">
-                </div>
-                
-                <!-- Campo Modelo do Carro (NOVO) -->
-                <div>
-                    <label for="modelo" class="block text-sm font-medium text-gray-700 mb-2">Modelo do Carro</label>
-                    <input type="text" id="modelo" name="modelo" required 
-                           placeholder="Ex: Palio, Onix, Civic"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 ease-in-out placeholder-gray-400 shadow-sm"
-                           aria-required="true">
-                </div>
-
-                <!-- Campo Ano do Carro (ALTERADO) -->
-                <div>
-                    <label for="ano" class="block text-sm font-medium text-gray-700 mb-2">Ano do Carro</label>
-                    <input type="number" id="ano" name="ano" required 
-                           placeholder="Ex: 2018"
-                           min="1900" max="2099"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 ease-in-out placeholder-gray-400 shadow-sm"
-                           aria-required="true">
-                </div>
-
-                <!-- Campo E-mail -->
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
-                    <input type="email" id="email" name="email" required 
-                           placeholder="seu.melhor.email@exemplo.com"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 ease-in-out placeholder-gray-400 shadow-sm"
-                           aria-required="true">
-                </div>
-
-                <!-- Campo Número de Telefone/WhatsApp -->
-                <div>
-                    <label for="telefone" class="block text-sm font-medium text-gray-700 mb-2">Telefone / WhatsApp</label>
-                    <input type="tel" id="telefone" name="telefone" required 
-                           placeholder="(99) 99999-9999"
-                           pattern="^\(\d{2}\) \d{4,5}-\d{4}$"
-                           title="Formato: (99) 99999-9999 ou (99) 9999-9999"
-                           maxlength="15"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 ease-in-out placeholder-gray-400 shadow-sm"
-                           oninput="maskPhone(this);"
-                           aria-required="true">
-                </div>
-                
-                <!-- Referência ao Corretor Welton com Foto -->
-                <div class="text-center pt-2 pb-4 border-t pt-4 border-gray-100">
-                    <!-- FOTO DO CORRETOR WELTON -->
-                    <!-- SUBSTITUA ESTA URL PELA URL REAL DA FOTO DO CORRETOR WELTON -->
-                    <img src="https://placehold.co/80x80/1e3a8a/ffffff?text=W"
-                         alt="Foto do Corretor Welton"
-                         class="w-20 h-20 rounded-full mx-auto mb-3 object-cover shadow-lg border-2 border-primary"
-                         onerror="this.onerror=null; this.src='https://placehold.co/80x80/1e3a8a/ffffff?text=W';">
-                         
-                    <p class="text-sm font-medium text-gray-600">Seu atendimento exclusivo será feito por:</p>
-                    <p class="text-xl font-extrabold text-primary mt-1">Welton (Corretor AGV)</p>
-                </div>
-
-                <!-- Botão de Envio -->
-                <button type="submit" 
-                        id="submitButton"
-                        class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-md text-base font-semibold text-primary bg-secondary hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary transition duration-200 transform hover:scale-[1.01]">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                    Iniciar Cotação Pelo WhatsApp
-                </button>
-            </form>
-
-            <!-- Área para Mensagens (Sucesso/WhatsApp Call to Action) -->
-            <div id="messageContainer" class="mt-6 hidden p-4 rounded-lg text-center bg-green-100 text-green-800 border border-green-400" role="status">
-                <!-- O conteúdo será preenchido pelo JavaScript -->
+            <!-- Campo Nome -->
+            <div class="input-group">
+                <input type="text" id="nome" name="nome" placeholder=" " required 
+                       class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
+                <label for="nome" class="label">Seu Nome Completo</label>
             </div>
-            
-        </main>
 
-        <!-- Footer da Página: Com Informações de Endereço (LINK CORRIGIDO) -->
-        <footer class="bg-gray-100 p-4 text-center text-xs text-gray-500 border-t border-gray-200">
-            <p class="mb-2 font-semibold text-gray-700">AGV Proteção Veicular - Unidade Central</p>
-            <!-- ENDEREÇO DA EMPRESA - AGORA CLICÁVEL COM LINK MAIS ESTÁVEL -->
-            <address class="not-italic mb-2">
-                <a href="https://www.google.com/maps/search/?api=1&query=Rua+Vicente+Guida,+126,+Vila+Vampre,+Poá,+SP" target="_blank" class="footer-link block">
-                    Rua Vicente Guida, 126 - Vila Vampre<br>
-                    Poá/SP - CEP 08556-170
-                </a>
-            </address>
-            <p>
-                Ao enviar, você concorda que nossa equipe de vendas entre em contato para apresentar os planos de proteção.
-            </p>
-        </footer>
+            <!-- Campo Telefone -->
+            <div class="input-group">
+                <input type="tel" id="telefone" name="telefone" placeholder=" " required maxlength="11"
+                       class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
+                <label for="telefone" class="label">Telefone / WhatsApp (Apenas números)</label>
+            </div>
+
+            <!-- Campo E-mail -->
+            <div class="input-group">
+                <input type="email" id="email" name="email" placeholder=" " 
+                       class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
+                <label for="email" class="label">E-mail</label>
+            </div>
+
+            <!-- Campo Placa -->
+            <div class="input-group">
+                <input type="text" id="placa" name="placa" placeholder=" " required maxlength="7"
+                       class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150 uppercase">
+                <label for="placa" class="label">Placa do Veículo (Ex: ABC1234)</label>
+            </div>
+
+            <div class="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-4">
+                <!-- Campo Marca -->
+                <div class="input-group flex-1">
+                    <input type="text" id="marca" name="marca" placeholder=" " 
+                           class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
+                    <label for="marca" class="label">Marca do Veículo</label>
+                </div>
+                <!-- Campo Modelo -->
+                <div class="input-group flex-1">
+                    <input type="text" id="modelo" name="modelo" placeholder=" " 
+                           class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
+                    <label for="modelo" class="label">Modelo do Veículo</label>
+                </div>
+            </div>
+
+            <!-- Campo Ano -->
+            <div class="input-group">
+                <input type="number" id="ano" name="ano" placeholder=" " min="1900" max="2099" 
+                       class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
+                <label for="ano" class="label">Ano do Veículo</label>
+            </div>
+
+            <!-- O campo Corretor de Referência foi removido para ser fixo no código. -->
+
+            <button type="submit" id="submitButton"
+                    class="whatsapp-button w-full bg-green-500 text-white font-bold py-3 rounded-xl text-lg shadow-lg hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300 flex items-center justify-center space-x-2">
+                <!-- Ícone do WhatsApp usando SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.95.553 3.766 1.503 5.312l-1.01 3.693 3.77-.996C6.72 20.472 9.24 21 12 21c5.523 0 10-4.477 10-10S17.523 2 12 2zm4.8 12.8c-.3-.15-.75-.23-1.08-.32-.33-.09-.57-.14-.8-.14-.24 0-.47 0-.7.09-.23.09-.5.22-.76.48-.26.26-.54.59-.66.72-.12.12-.24.25-.47.25-.23 0-.47-.09-.7-.22-.23-.09-.47-.19-.9-.38-.43-.19-.79-.47-1.11-.79-.32-.32-.59-.69-.76-1.02-.17-.33-.28-.7-.28-1.07 0-.37.1-.6.28-.79.17-.19.37-.32.48-.44.12-.12.24-.25.37-.47.12-.22.18-.47.25-.7.06-.23.09-.47 0-.7-.09-.23-.42-.51-.61-.75-.19-.24-.42-.48-.61-.6-.19-.12-.41-.22-.64-.22-.23 0-.46.06-.67.09-.21.03-.43.03-.64.03-.21 0-.44-.03-.67 0-.23.03-.46.09-.7.22-.24.12-.47.25-.7.47-.23.22-.45.48-.64.75-.19.27-.32.54-.42.82-.1.28-.15.58-.15.89 0 .31.06.6.18.91.12.3.29.6.47.88.19.28.41.56.64.82.23.26.47.51.7.75.24.24.47.48.7.67.23.19.48.37.76.54.28.17.59.32.91.44.32.12.67.19 1.02.19.37 0 .7-.09 1.04-.15.34-.06.66-.19.98-.32.32-.12.63-.28.92-.47.29-.19.55-.42.76-.66.21-.24.37-.51.47-.82.1-.31.15-.63.15-.96 0-.33-.03-.66-.1-.98z"/></svg>
+                <span>Iniciar Cotação Pelo WhatsApp</span>
+            </button>
+            <div id="messageBox" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg hidden"></div>
+        </form>
     </div>
 
     <script>
-        // *** 1. CONFIGURAÇÃO DE INTEGRAÇÃO ***
-
-        // NÚMERO DO WHATSAPP (com código do país e DDD)
-        const WHATSAPP_NUMBER = '5511981087312'; 
-
-        // URL do Webhook do MAKE/PLUGA (ou outro sistema) para onde os dados serão enviados (POST)
-        // Você deve obter esta URL ao configurar o gatilho de Webhook no Make ou Pluga.
-        const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/m2lwthx8sswb54m88r6fg1m9jx8ky3n2'; 
-        // ****************************************
-
-        // Função para aplicar a máscara no campo de telefone
-        function maskPhone(input) {
-            let value = input.value.replace(/\D/g, ""); // Remove tudo que não for dígito
-            let formattedValue = '';
-
-            if (value.length > 0) {
-                formattedValue += '(' + value.substring(0, 2);
-            }
-            if (value.length > 2) {
-                // Trata 9 dígitos (celular)
-                if (value.length > 10) { 
-                    formattedValue += ') ' + value.substring(2, 7);
-                    if (value.length > 7) {
-                        formattedValue += '-' + value.substring(7, 11);
-                    }
-                } else { // Trata 8 dígitos (fixo/antigo)
-                    formattedValue += ') ' + value.substring(2, 6);
-                    if (value.length > 6) {
-                        formattedValue += '-' + value.substring(6, 10);
-                    }
-                }
-            }
-            
-            input.value = formattedValue.substring(0, 15); // Limita ao tamanho máximo
-        }
-
-        // Função principal de submissão do formulário
-        document.getElementById('leadForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Impede o envio tradicional do formulário
-            
-            const form = event.target;
-            const messageContainer = document.getElementById('messageContainer');
-            const submitButton = document.getElementById('submitButton');
-            
-            // 1. Coleta dos dados
-            const placa = form.placa.value.toUpperCase().trim();
-            const placaFinal = placa.charAt(placa.length - 1);
-            
-            const formData = {
-                nome: form.nome.value.trim(),
-                placa: placa,
-                marca: form.marca.value.trim(),
-                modelo: form.modelo.value.trim(),
-                ano: form.ano.value.trim(),
-                email: form.email.value.trim(),
-                telefone: form.telefone.value.trim(),
-                dígitoFinal: placaFinal,
-                // Adiciona a referência do corretor para o Make
-                corretor: 'Welton', 
-                data_hora_envio: new Date().toLocaleString('pt-BR', { 
-                    timeZone: 'America/Sao_Paulo', 
-                    day: '2-digit', 
-                    month: '2-digit', 
-                    year: 'numeric', 
-                    hour: '2-digit', 
-                    minute: '2-digit', 
-                    second: '2-digit',
-                    hour12: false
-                })
-            };
-
-            // 2. ENVIAR PARA O MAKE/PLUGA (Webhook)
-            // Esta chamada é assíncrona e não bloqueará o redirecionamento para o WhatsApp.
-            // Verifica se a URL foi configurada antes de tentar enviar.
-            if (MAKE_WEBHOOK_URL.startsWith('https://')) {
-                // Desabilitar o botão e mostrar o status de envio para o Webhook
-                submitButton.disabled = true;
-                submitButton.innerHTML = `
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Enviando dados e preparando WhatsApp...
-                `;
-
-                fetch(MAKE_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => {
-                    // console.log('Dados enviados para o Make/Pluga com sucesso.', response);
-                    // Não faz nada com a resposta, apenas garante que a requisição foi feita.
-                })
-                .catch(error => {
-                    // console.error('Erro ao enviar dados para o Make/PLuga:', error);
-                    // Ignora o erro, pois o mais importante é o WhatsApp.
-                })
-                .finally(() => {
-                    // Após a tentativa de envio (sucesso ou falha), prossegue para o WhatsApp.
-                    proceedToWhatsapp(formData, submitButton, messageContainer);
-                });
-            } else {
-                // Se o Webhook não estiver configurado, avança direto para o WhatsApp
-                // console.warn('MAKE_WEBHOOK_URL não configurada ou inválida. Pulando envio para automação.');
-                proceedToWhatsapp(formData, submitButton, messageContainer);
-            }
+        const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/m2lwthx8sswb54m88r6fg1m9jx8ky3n2'; // URL do Webhook do Make.com
+        
+        // Dados fixos do corretor e endereço (ALTERADOS CONFORME SOLICITADO)
+        const CORRETOR_NOME = 'Jackson Soares';
+        const CORRETOR_ENDERECO = 'Rua Monte Camberela, 184 - CEP: 08452-340';
+        
+        document.getElementById('cotacaoForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            sendToWebhook();
         });
 
-        // Função para finalizar e redirecionar para o WhatsApp
-        function proceedToWhatsapp(formData, submitButton, messageContainer) {
-             // 3. Monta a mensagem e prepara o WhatsApp
-            const whatsappMessage = `Olá! Sou ${formData.nome} e gostaria de uma cotação para o meu veículo.
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            // Remove qualquer coisa que não seja dígito
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').substring(0, 11);
+        });
 
-*Dados do Veículo:*
-- Placa: ${formData.placa}
-- Marca: ${formData.marca}
-- Modelo: ${formData.modelo}
-- Ano: ${formData.ano}
+        document.getElementById('placa').addEventListener('input', function(e) {
+            // Converte para maiúsculas e remove caracteres inválidos
+            e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 7);
+        });
 
-Meu telefone/WhatsApp:
-${formData.telefone}
-Meu E-mail:
-${formData.email}
-
-Aguardando o contato do Corretor Welton!`; 
+        // Função para formatar a data para o horário de São Paulo (DD/MM/YYYY HH:mm:ss)
+        function formatDateToSaoPaulo() {
+            const date = new Date();
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZone: 'America/Sao_Paulo',
+                hour12: false // Formato 24h
+            };
             
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+            // Cria a string no formato DD/MM/YYYY, HH:mm:ss
+            const formatter = new Intl.DateTimeFormat('pt-BR', options);
+            const parts = formatter.formatToParts(date);
+            
+            const day = parts.find(p => p.type === 'day').value;
+            const month = parts.find(p => p.type === 'month').value;
+            const year = parts.find(p => p.type === 'year').value;
+            const hour = parts.find(p => p.type === 'hour').value;
+            const minute = parts.find(p => p.type === 'minute').value;
+            const second = parts.find(p => p.type === 'second').value;
 
-            // 4. Simulação de tempo de processamento e redirecionamento do WhatsApp
+            return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+        }
+
+        // Função para formatar o número de telefone para (XX) XXXXX-XXXX
+        function formatPhoneNumber(phone) {
+            // Remove todos os caracteres que não são dígitos
+            const cleanPhone = phone.replace(/\D/g, '');
+
+            // Aplica a máscara (XX) XXXXX-XXXX se tiver 11 dígitos (com DDD)
+            if (cleanPhone.length === 11) {
+                return `(${cleanPhone.substring(0, 2)}) ${cleanPhone.substring(2, 7)}-${cleanPhone.substring(7, 11)}`;
+            }
+            // Aplica a máscara (XX) XXXX-XXXX se tiver 10 dígitos (com DDD)
+            if (cleanPhone.length === 10) {
+                return `(${cleanPhone.substring(0, 2)}) ${cleanPhone.substring(2, 6)}-${cleanPhone.substring(6, 10)}`;
+            }
+            
+            return cleanPhone; // Retorna sem formatação se o formato for inválido
+        }
+
+        async function sendToWebhook() {
+            const form = document.getElementById('cotacaoForm');
+            const nome = form.nome.value.trim();
+            const email = form.email.value.trim();
+            const placa = form.placa.value.trim();
+            const marca = form.marca.value.trim();
+            const modelo = form.modelo.value.trim();
+            const ano = form.ano.value.trim();
+            // Corretor de Referência é fixo
+            const corretor = CORRETOR_NOME; 
+
+            // Telefone: Remove formatação para envio
+            const phoneClean = form.telefone.value.replace(/\D/g, '');
+            // Telefone formatado para mensagem de texto
+            const phoneFormatted = formatPhoneNumber(phoneClean);
+            
+            // Validações básicas
+            if (!nome || phoneClean.length < 10 || !placa) {
+                showMessage('Por favor, preencha corretamente os campos obrigatórios: Nome, Telefone (com DDD) e Placa.', 'bg-red-100 border-red-400 text-red-700');
+                return;
+            }
+
+            // Lógica para extrair o último dígito da placa
+            const placaFinal = placa.length >= 1 ? placa.slice(-1) : '';
+
+            // Dados a serem enviados ao Make.com
+            const data = {
+                nome: nome,
+                telefone: phoneClean, // Enviamos o telefone sem formatação para o Sheets
+                email: email,
+                placa: placa,
+                dígitoFinal: placaFinal, 
+                marca: marca,
+                modelo: modelo,
+                ano: ano,
+                corretor: corretor, // Corretor fixo: Jackson Soares
+                data_hora_envio: formatDateToSaoPaulo() // Data e hora local de SP formatada
+            };
+            
+            // 1. Enviar para o Webhook do Make.com (assíncrono)
+            try {
+                const response = await fetch(MAKE_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    console.error('Erro ao enviar dados para o Make.com:', response.statusText);
+                } else {
+                    console.log('Dados enviados com sucesso ao Make.com');
+                }
+            } catch (error) {
+                console.error('Erro de rede ao enviar para o Make.com:', error);
+            }
+            
+            // 2. Criar e redirecionar para o link do WhatsApp (síncrono)
+            
+            // O número de telefone no link do WhatsApp DEVE estar no formato E.164 (país + DDD + número)
+            const phoneE164 = '55' + phoneClean; // Assumindo código do país 55 (Brasil)
+
+            // Mensagem formatada para o WhatsApp (usando \n para quebra de linha)
+            const whatsappMessage = encodeURIComponent(
+                `Olá! Meu nome é ${nome} e gostaria de iniciar a cotação da proteção veicular.\n\n` +
+                `Detalhes do veículo:\n` +
+                `Placa: ${placa} (Dígito Final: ${placaFinal})\n` +
+                `Marca/Modelo: ${marca} / ${modelo}\n` +
+                `Ano: ${ano}\n\n` +
+                `Meu telefone/WhatsApp:\n${phoneFormatted}\n` + 
+                `E-mail:\n${email}\n\n` + 
+                `Corretor de Referência: ${corretor}\n` + // Corretor Fixo: Jackson Soares
+                `Endereço de Referência:\n${CORRETOR_ENDERECO}` // Novo Endereço
+            );
+
+            // Redireciona para o WhatsApp (o número do atendimento deve ser fixo aqui)
+            // Exemplo: 5511988887777 é o número de atendimento
+            const atendimentoNumber = '5511988887777'; // Substitua pelo número de atendimento AGV no formato 55DDDXXXXYYYY
+            const whatsappLink = `https://wa.me/${atendimentoNumber}?text=${whatsappMessage}`;
+            
+            // Redireciona o usuário para o WhatsApp
+            window.location.href = whatsappLink;
+
+            // Mostra a mensagem de sucesso na tela temporariamente (se não houver redirecionamento imediato)
+            showMessage('Redirecionando para o WhatsApp...', 'bg-green-100 border-green-400 text-green-700');
+        }
+
+        function showMessage(text, className) {
+            const msgBox = document.getElementById('messageBox');
+            msgBox.textContent = text;
+            msgBox.className = `mt-4 p-3 border rounded-lg ${className}`;
+            msgBox.classList.remove('hidden');
             setTimeout(() => {
-                
-                // Abre o link do WhatsApp em uma nova aba
-                window.open(whatsappUrl, '_blank');
-
-                // Mostrar Mensagem de Sucesso/Instrução
-                messageContainer.classList.remove('hidden');
-                messageContainer.innerHTML = `
-                    <h3 class="text-xl font-bold mb-2">Quase lá! ✅</h3>
-                    <p class="mb-4">Uma nova janela ou aba do WhatsApp foi aberta. Por favor, clique em **'Enviar'** para confirmar seus dados e iniciar a conversa com a nossa equipe.</p>
-                    <a href="${whatsappUrl}" target="_blank" class="whatsapp-button inline-flex items-center justify-center py-2 px-6 rounded-lg font-bold shadow-md hover:opacity-90 transition duration-150">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.002 0C18.63 0 24 5.371 24 12.002c0 3.328-1.344 6.336-3.518 8.526l-1.92 1.921-2.923-1.071c-1.366.78-2.943 1.205-4.639 1.205C5.37 24 0 18.63 0 12.002 0 5.371 5.372 0 12.002 0zM12.002 2.4c-5.28 0-9.6 4.32-9.6 9.6 0 1.638.41 3.204 1.18 4.596L2.4 21.6l4.604-1.18c1.39.77 2.956 1.18 4.598 1.18 5.28 0 9.6-4.32 9.6-9.6s-4.32-9.6-9.6-9.6zm5.88 12.384c-.033.06-.067.12-.134.19-.067.067-.134.134-.202.167-.403.202-.807.302-1.211.302s-.807-.101-1.211-.302c-.068-.033-.135-.101-.202-.167-.067-.067-.101-.134-.134-.19-1.277-2.023-2.023-3.034-2.224-3.235-.067-.101-.134-.135-.202-.168-.1-.033-.202-.033-.303-.033s-.202 0-.303.033c-.067.034-.134.101-.202.168-.067.067-.134.134-.168.202-1.012 1.211-1.012 1.817-1.012 2.422 0 .505.303 1.212.505 1.515.202.303.505.505.707.707.202.202.403.403.605.605.202.202.336.437.403.605.067.168.101.37.101.605s-.033.437-.101.605c-.067.168-.134.336-.235.437-.067.101-.134.168-.202.202-.168.067-.37.101-.605.101s-.403 0-.605-.101c-.202-.101-.403-.202-.605-.303-1.012-1.211-1.516-2.023-1.516-3.034 0-1.012.336-1.923.673-2.735.336-.81.673-1.516 1.012-2.122.336-.605.673-1.11 1.012-1.515.336-.403.707-.77 1.012-1.073.303-.303.673-.57 1.012-.807.336-.235.707-.47 1.012-.673.303-.202.639-.37 1.012-.505.37-.134.807-.202 1.211-.202s.807.067 1.211.202c.403.134.77.302 1.073.505.303.202.605.403.874.673.268.27.505.57.707.907.202.336.336.707.403 1.11.067.403.067.874 0 1.344-.067.47-.202.94-.403 1.41z"/>
-                        </svg>
-                        Enviar Mensagem Agora
-                    </a>
-                `;
-
-                // 5. Resetar o botão para permitir novos leads
-                submitButton.disabled = false;
-                submitButton.innerHTML = `
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                    Iniciar Cotação Pelo WhatsApp
-                `;
-                
-                // Opcional: Limpar o formulário após 5 segundos para que o usuário possa enviar um novo lead, se necessário
-                // setTimeout(() => form.reset(), 5000); 
-
-            }, 1000); // 1 segundo de simulação para o processamento
+                // Esconde a mensagem depois de 3 segundos (exceto se for uma mensagem crítica de erro)
+                if (className.includes('green') || className.includes('red')) {
+                     msgBox.classList.add('hidden');
+                }
+            }, 3000);
         }
     </script>
 </body>
