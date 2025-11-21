@@ -3,18 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGV Proteção Veicular - Cotação Rápida</title>
+    <!-- Título da página atualizado -->
+    <title>AGV - Proteção Veicular</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Estilos base para a fonte e fundo */
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .form-card { max-width: 500px; }
+        
+        /* Estilização para o efeito de "floating label" */
         .input-group { position: relative; }
+        
+        /* Adiciona um asterisco vermelho discreto nos labels dos campos obrigatórios */
+        .input-group input[required] ~ .label::after {
+            content: '*';
+            color: #ef4444; /* Tailwind red-500 */
+            margin-left: 4px;
+        }
+
         .input-group input:focus ~ .label,
         .input-group input:not(:placeholder-shown) ~ .label {
             top: -10px;
             font-size: 0.75rem;
-            color: #1e40af; /* Tailwind blue-700 */
+            color: #1d4ed8; /* Tailwind blue-700 */
         }
         .input-group .label {
             position: absolute;
@@ -26,6 +38,7 @@
             padding: 0 4px;
             color: #6b7280; /* Tailwind gray-500 */
         }
+        
         /* Estilos específicos para o botão de WhatsApp */
         .whatsapp-button {
             transition: background-color 0.3s ease, transform 0.1s ease;
@@ -35,6 +48,7 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
+        
         /* Garante que o input de telefone só aceite dígitos e limite o tamanho */
         #telefone {
             appearance: none;
@@ -45,54 +59,66 @@
             -webkit-appearance: none; 
             margin: 0; 
         }
+
+        /* Estilo para o link de endereço no rodapé */
+        .address-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-8 flex flex-col items-center justify-center min-h-screen">
 
-    <div class="form-card w-full mb-6">
-        <!-- 1. LOGO CENTRALIZADO RESTAURADO -->
-        <div class="text-center mb-6">
-            <img src="URL_DO_LOGO_AQUI" 
-                 onerror="this.onerror=null; this.src='https://placehold.co/200x50/1e40af/ffffff?text=LOGO+AGV'"
-                 alt="Logo AGV Proteção Veicular" 
-                 class="mx-auto h-12 sm:h-14 rounded-lg">
-        </div>
+    <!-- Card Principal do Formulário - REMOVIDO mb-6 -->
+    <div class="form-card w-full mb-0 shadow-2xl rounded-xl overflow-hidden bg-white">
         
-        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-2xl">
+        <!-- CABEÇALHO AZUL: AGV - Proteção Veicular -->
+        <header class="bg-blue-700 text-white p-6 sm:p-8 text-center">
+            <!-- Placeholder para o Logo AGV. Substitua 'URL_DO_LOGO_AQUI' pela URL real do logo. -->
+            <img src="URL_DO_LOGO_AQUI" 
+                 onerror="this.onerror=null; this.src='https://placehold.co/200x50/ffffff/1d4ed8?text=LOGO+AGV'"
+                 alt="Logo AGV Proteção Veicular" 
+                 class="mx-auto h-12 sm:h-14 mb-3">
+            <!-- Título da Empresa -->
+            <h1 class="text-2xl sm:text-3xl font-bold">AGV - Proteção Veicular</h1>
+        </header>
+
+        <!-- Conteúdo do Formulário -->
+        <div class="p-6 sm:p-8">
             <div class="flex items-center space-x-3 mb-6 border-b pb-4">
-                <!-- Icone de Escudo/Proteção usando SVG -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-blue-600">
+                <!-- Ícone de Escudo/Proteção -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-blue-600">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Cotação Rápida AGV</h1>
+                <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">Inicie Sua Cotação Rápida</h2>
             </div>
             
-            <p class="text-gray-600 mb-6">Preencha os dados abaixo e inicie sua cotação diretamente pelo WhatsApp.</p>
+            <!-- TEXTO DE INSTRUÇÃO SIMPLIFICADO -->
+            <p class="text-gray-600 mb-6">Preencha os dados abaixo para iniciar sua cotação rápida pelo WhatsApp.</p>
 
             <form id="cotacaoForm" class="space-y-6">
                 
-                <!-- Campo Nome -->
+                <!-- Campo Nome (Obrigatório) -->
                 <div class="input-group">
                     <input type="text" id="nome" name="nome" placeholder=" " required 
                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
                     <label for="nome" class="label">Seu Nome Completo</label>
                 </div>
 
-                <!-- Campo Telefone -->
+                <!-- Campo Telefone (Obrigatório) -->
                 <div class="input-group">
                     <input type="tel" id="telefone" name="telefone" placeholder=" " required maxlength="11"
                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
                     <label for="telefone" class="label">Telefone / WhatsApp (Apenas números)</label>
                 </div>
 
-                <!-- Campo E-mail -->
+                <!-- Campo E-mail (OBRIGATÓRIO) -->
                 <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder=" " 
+                    <input type="email" id="email" name="email" placeholder=" " required 
                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
                     <label for="email" class="label">E-mail</label>
                 </div>
 
-                <!-- Campo Placa -->
+                <!-- Campo Placa (OBRIGATÓRIO) -->
                 <div class="input-group">
                     <input type="text" id="placa" name="placa" placeholder=" " required maxlength="7"
                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150 uppercase">
@@ -100,23 +126,23 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-4">
-                    <!-- Campo Marca -->
+                    <!-- Campo Marca (Opcional - mantido) -->
                     <div class="input-group flex-1">
                         <input type="text" id="marca" name="marca" placeholder=" " 
                                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
-                        <label for="marca" class="label">Marca do Veículo</label>
+                        <label for="marca" class="label">Marca do Veículo (Opcional)</label>
                     </div>
-                    <!-- Campo Modelo -->
+                    <!-- Campo Modelo (OBRIGATÓRIO) -->
                     <div class="input-group flex-1">
-                        <input type="text" id="modelo" name="modelo" placeholder=" " 
+                        <input type="text" id="modelo" name="modelo" placeholder=" " required
                                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
                         <label for="modelo" class="label">Modelo do Veículo</label>
                     </div>
                 </div>
 
-                <!-- Campo Ano -->
+                <!-- Campo Ano (OBRIGATÓRIO) -->
                 <div class="input-group">
-                    <input type="number" id="ano" name="ano" placeholder=" " min="1900" max="2099" 
+                    <input type="number" id="ano" name="ano" placeholder=" " min="1900" max="2099" required
                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition duration-150">
                     <label for="ano" class="label">Ano do Veículo</label>
                 </div>
@@ -132,31 +158,53 @@
         </div>
     </div>
     
-    <!-- 2. RODAPÉ PERSONALIZADO RESTAURADO -->
-    <div class="form-card w-full mt-6 bg-white p-4 rounded-xl shadow-md border-t border-gray-100">
-        <div class="flex items-center space-x-4">
+    <!-- RODAPÉ AZUL (Novo Estilo) -->
+    <div class="form-card w-full mt-0 mb-6 bg-blue-700 p-4 rounded-xl shadow-md">
+        <!-- Detalhes do Corretor -->
+        <div class="flex items-center space-x-4 mb-4 pb-4 border-b border-blue-500">
+            <!-- Placeholder para a Foto do Corretor. Substitua 'URL_FOTO_CORRETOR_AQUI' pela URL real. -->
             <img src="URL_FOTO_CORRETOR_AQUI" 
                  onerror="this.onerror=null; this.src='https://placehold.co/80x80/cccccc/333333?text=FOTO';"
                  alt="Foto do Corretor Jackson Soares" 
-                 class="w-16 h-16 rounded-full object-cover border-2 border-blue-500 flex-shrink-0">
+                 class="w-16 h-16 rounded-full object-cover border-2 border-white flex-shrink-0">
             <div>
-                <p class="font-bold text-gray-800 text-lg">Jackson Soares</p>
-                <p class="text-sm text-blue-600">Corretor de Referência</p>
-                <p class="text-xs text-gray-500">AGV Proteção Veicular</p>
+                <p class="font-bold text-white text-lg">Jackson Soares</p>
+                <p class="text-sm text-blue-300">Corretor de Referência</p>
+                <p class="text-xs text-blue-200">AGV Proteção Veicular</p>
             </div>
         </div>
+        
+        <!-- Bloco de Endereço Clicável para o Google Maps -->
+        <a href="https://www.google.com/maps/search/?api=1&query=Rua+Monte+Camberela%2C+184+-+CEP%3A+08452-340+-+S%C3%A3o+Paulo%2FSP" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="flex items-start space-x-3 text-white hover:text-blue-300 address-link">
+            <!-- Ícone de Localização (Agora Branco) -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-white mt-0.5 flex-shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+            </svg>
+            <p class="text-sm">
+                Rua Monte Camberela, 184 - CEP: 08452-340 - São Paulo/SP
+            </p>
+        </a>
+        
+        <!-- NOVA LINHA: Observação da Unidade -->
+        <p class="text-sm text-blue-200 mt-2 ml-8">Unidade Itaim Paulista</p>
     </div>
 
     <script>
         // ATENÇÃO: Substitua 'URL_DO_LOGO_AQUI' e 'URL_FOTO_CORRETOR_AQUI' pelas URLs reais das imagens.
         // Se as URLs não forem substituídas, serão exibidos placeholders.
         
-        const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/m2lwthx8sswb54m88r6fg1m9jx8ky3n2'; // URL do Webhook do Make.com
+        // URL do Webhook do Make.com (confirmado)
+        const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/m2lwthx8sswb54m88r6fg1m9jx8ky3n2'; 
         
-        // Dados fixos do corretor e endereço (CONFIRMADOS)
+        // Dados fixos do corretor e endereço (confirmados)
         const CORRETOR_NOME = 'Jackson Soares';
-        const CORRETOR_ENDERECO = 'Rua Monte Camberela, 184 - CEP: 08452-340';
-        // Número de Atendimento Fixo (Substitua pelo número AGV real, ex: 5511988887777)
+        // Endereço fixo do corretor, usado também na mensagem do WhatsApp
+        const CORRETOR_ENDERECO = 'Rua Monte Camberela, 184 - CEP: 08452-340 - São Paulo/SP'; 
+        // Número de Atendimento Fixo (Substitua pelo número AGV real com código do país e DDD, ex: 5511988887777)
         const ATENDIMENTO_NUMBER = '5511988887777'; 
 
         document.getElementById('cotacaoForm').addEventListener('submit', function(event) {
@@ -164,13 +212,13 @@
             sendToWebhook();
         });
 
+        // Limita o campo de telefone a apenas números (11 dígitos, incluindo DDD)
         document.getElementById('telefone').addEventListener('input', function(e) {
-            // Remove qualquer coisa que não seja dígito
             e.target.value = e.target.value.replace(/[^0-9]/g, '').substring(0, 11);
         });
 
+        // Converte o campo de placa para maiúsculas e limita a 7 caracteres
         document.getElementById('placa').addEventListener('input', function(e) {
-            // Converte para maiúsculas e remove caracteres inválidos
             e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 7);
         });
 
@@ -228,9 +276,10 @@
             const phoneClean = form.telefone.value.replace(/\D/g, '');
             const phoneFormatted = formatPhoneNumber(phoneClean);
             
-            // Validações básicas
-            if (!nome || phoneClean.length < 10 || !placa) {
-                showMessage('Por favor, preencha corretamente os campos obrigatórios: Nome, Telefone (com DDD) e Placa.', 'bg-red-100 border-red-400 text-red-700');
+            // A validação HTML5 nativa agora cuida da maioria dos campos obrigatórios.
+            // Aqui, apenas reforçamos a checagem do comprimento do telefone.
+            if (phoneClean.length < 10) {
+                showMessage('Por favor, verifique o campo Telefone/WhatsApp. É necessário incluir o DDD e pelo menos 8 dígitos.', 'bg-red-100 border-red-400 text-red-700');
                 return;
             }
 
@@ -274,7 +323,8 @@
                 `Olá! Meu nome é ${nome} e gostaria de iniciar a cotação da proteção veicular.\n\n` +
                 `Detalhes do veículo:\n` +
                 `Placa: ${placa} (Dígito Final: ${placaFinal})\n` +
-                `Marca/Modelo: ${marca} / ${modelo}\n` +
+                `Marca: ${marca || 'Não informado'}\n` +
+                `Modelo: ${modelo}\n` +
                 `Ano: ${ano}\n\n` +
                 `Meu telefone/WhatsApp:\n${phoneFormatted}\n` + 
                 `E-mail:\n${email}\n\n` + 
