@@ -220,18 +220,16 @@
 
     <script>
         // ATENÇÃO: Substitua 'URL_DO_LOGO_AQUI' e 'URL_FOTO_CORRETOR_AQUI' pelas URLs reais das imagens.
-        // Se as URLs não forem substituídas, serão exibidos placeholders.
         
         // URL do Webhook do Make.com (confirmado)
-        const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/m2lwthx8sswb54m88r6fg1m9jx8ky3n1'; // Certifique-se de usar o URL correto. 
+        const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/m2lwthx8sswb54m88r6fg1m9jx8ky3n1'; 
         
         // Dados fixos do corretor e endereço (confirmados)
         const CORRETOR_NOME = 'Jackson Soares';
-        // Endereço fixo do corretor. REMOVIDO DA MENSAGEM DO WHATSAPP, mas mantido na constante caso seja necessário para outras partes do código.
         const CORRETOR_ENDERECO = 'Rua Monte Camberela, 184 - CEP: 08452-340 - São Paulo/SP'; 
         
-        // NOVO NÚMERO DE ATENDIMENTO: 11981087312, formatado com código do país 55 e DDD 11.
-        const ATENDIMENTO_NUMBER = '5511981087312'; // Número de atendimento AGV
+        // Número de atendimento AGV
+        const ATENDIMENTO_NUMBER = '5511981087312'; 
 
         document.getElementById('cotacaoForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -289,6 +287,44 @@
             return cleanPhone; 
         }
 
+        /**
+         * Envia os dados do lead para o Webhook do Make.com com retentativas.
+         * Esta função é executada em segundo plano e não bloqueia a interface.
+         * @param {object} data - Os dados do formulário a serem enviados.
+         */
+        async function submitToMake(data) {
+            const MAX_RETRIES = 3;
+            let attempt = 0;
+            let success = false;
+
+            while (attempt < MAX_RETRIES && !success) {
+                try {
+                    const response = await fetch(MAKE_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (response.ok) {
+                        console.log('Dados do lead enviados com sucesso ao Make.com.');
+                        success = true;
+                    } else {
+                        throw new Error(`Erro de resposta do Make.com: ${response.statusText}`);
+                    }
+                } catch (error) {
+                    attempt++;
+                    if (attempt < MAX_RETRIES) {
+                        const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s de espera
+                        console.warn(`Falha no envio (Tentativa ${attempt}/${MAX_RETRIES}). Tentando novamente em ${delay/1000}s...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    } else {
+                        console.error('Falha final ao enviar dados do lead para o Make.com após retentativas:', error);
+                    }
+                }
+            }
+        }
+
+
         async function sendToWebhook() {
             const form = document.getElementById('cotacaoForm');
             const nome = form.nome.value.trim();
@@ -324,48 +360,15 @@
                 data_hora_envio: formatDateToSaoPaulo() 
             };
             
-            // 1. Enviar para o Webhook do Make.com (assíncrono)
-            try {
-                // Configuração de Retry com Backoff Exponencial
-                const MAX_RETRIES = 3;
-                let attempt = 0;
-                let success = false;
-
-                while (attempt < MAX_RETRIES && !success) {
-                    try {
-                        const response = await fetch(MAKE_WEBHOOK_URL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        });
-
-                        if (response.ok) {
-                            console.log('Dados enviados com sucesso ao Make.com');
-                            success = true;
-                        } else {
-                            throw new Error(`Erro de resposta: ${response.statusText}`);
-                        }
-                    } catch (error) {
-                        attempt++;
-                        if (attempt < MAX_RETRIES) {
-                            const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                        } else {
-                            console.error('Falha final ao enviar dados para o Make.com após retentativas:', error);
-                            showMessage('Erro ao enviar dados. Por favor, tente novamente.', 'bg-red-100 border-red-400 text-red-700');
-                        }
-                    }
-                }
-            } catch (error) {
-                // Este bloco só deve pegar erros antes do loop while (e.g. erro de configuração inicial)
-                console.error('Erro de rede ou inicial ao enviar para o Make.com:', error);
-            }
+            // 1. INICIAR O ENVIO PARA O MAKE.COM EM SEGUNDO PLANO (NÃO BLOQUEIA O REDIRECIONAMENTO)
+            // A função submitToMake cuidará das retentativas e logs de erro.
+            submitToMake(data);
             
-            // 2. Criar e redirecionar para o link do WhatsApp (síncrono)
+            // 2. Criar e redirecionar para o link do WhatsApp (IMEDIATO)
             
             // Mensagem formatada para o WhatsApp (usando \n para quebra de linha)
             const whatsappMessage = encodeURIComponent(
-                `Olá! Meu nome é ${nome}, e gostaria de iniciar a cotação de proteção para meu veicular.\n\n` +
+                `Olá! Meu nome é ${nome}, e gostaria de iniciar a cotação da proteção veicular.\n\n` +
                 `Detalhes do veículo:\n` +
                 `Placa: ${placa} (Dígito Final: ${placaFinal})\n` +
                 `Marca: ${marca || 'Não informado'}\n` +
@@ -373,15 +376,18 @@
                 `Ano: ${ano}\n\n` +
                 `Meu telefone/WhatsApp:\n${phoneFormatted}\n` + 
                 `E-mail:\n${email}\n\n` + 
-                `Corretor de Referência:\n${corretor}` // Quebra de linha adicionada aqui
+                `Corretor de Referência:\n${corretor}`
             );
 
-            // Redireciona para o WhatsApp
+            // Exibe a mensagem de redirecionamento antes de sair da página
+            showMessage('Redirecionando para o WhatsApp...', 'bg-green-100 border-green-400 text-green-700');
+
+            // Redireciona para o WhatsApp (acontece instantaneamente após o início do envio do lead)
             const whatsappLink = `https://wa.me/${ATENDIMENTO_NUMBER}?text=${whatsappMessage}`;
             
             window.location.href = whatsappLink;
 
-            showMessage('Redirecionando para o WhatsApp...', 'bg-green-100 border-green-400 text-green-700');
+            // Nota: O showMessage pode não ser totalmente visível, pois a página será redirecionada muito rápido.
         }
 
         function showMessage(text, className) {
